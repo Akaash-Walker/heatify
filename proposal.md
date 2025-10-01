@@ -1,7 +1,24 @@
 # Group 16 Final Project Proposal - Heatify
 
-Our project idea is to make a website where a user can see a heatmap of the world with artistst that they listen to. The map would be intereactive, where users could zoom in and see what artists are from a specific country.
+### Summary
 
-For technologies, we plan to use React, Express, TailwindCSS, TypeScript, MongoDB, Spotify Web API, and Auth0. Users can log in and connect their account to our application, after which they are presetned with a map of the world. Using the Spotify web api, we can access the user's recently listen to songs. The web api gives us access to information about these songs, such as the artist, duration, track name, album, and more. After collecting the artists name, we would perform a search to see where that artist is from. In our database we would store a list of countries, each of which would have a list of artists that the user has listened to, respective to their country. 
+Our project will be a website that shows a heatmap of the countries where users’ recently listened to artists come from. The map would be intereactive, allowing users to click on a country to see a more detailed view of the artists that come from there.
 
-When the user wants to view their heatmap, we would make a query to the database to get the list of artists for each country. Depending on the number of artists in a given country, we would increase the color or "heat" of that country. Since we are in the US, we would also include individual states for more information. Users can hover over each country to see a list of their listened artists from that country. 
+### Technologies
+- MongoDB - for user data storage
+- React - for frontend component development
+- Express - to manage routes and endpoints
+- Node.js - for client-server communication
+#### Additional technologies
+- Tailwind CSS along with a component library (undecided) for simple and quick UI development
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api) for getting a user's recently listened to data
+- Auth0 for securely retrieving user data from Spotify
+- [Leaflet](https://leafletjs.com/) for an interactive and dynamic heatmap
+
+### Program flow
+
+First, users will connect their Spotify account to our application. This will create a new document in our databse which will be used to store and retrieve user information. Next, our application will use the Spotify Web API to return a list of the users' most recently listened to songs. We can map over this list to generate a list of the artists, removing any duplicates if needed. We can then perform a search to find the origin of each artist. MongoDB would have a unique document for each user, and each document would contain a list of objects that have both an artist and their place of origin. Using this list, along with Leaflet, we would then generate a heatmap of artists' locations. Clicking on a country would show which artists are from that country. 
+
+### Why use MongoDB at all?
+
+This is a great question that fixes a shortcoming of the Spotify Web API. Spotify's API only allows us to record the last 50 listened to songs, meaning our heatmap would have a limit of 50 datapoints at any given time. By making an API call and storing the information in MongoDB, it allows us to continually gather information from the user over time.
