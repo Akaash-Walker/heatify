@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 // using axios instead of fetch for simplicity
 import axios from "axios";
+import Navbar from "./components/navbar.tsx";
 
 export default function Home() {
     // useState to store the message contents
@@ -20,8 +21,13 @@ export default function Home() {
 
     // display the message
     return (
-        <div>
-            {message}
-        </div>
+        <>
+            <Navbar/>
+            <div className={"flex flex-col items-center justify-center"}>
+            <label className={"label text-center mt-10"}>
+                {message}
+            </label>
+            </div>
+        </>
     );
 }
