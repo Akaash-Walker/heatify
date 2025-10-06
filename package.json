@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "nodemon src/server/server.ts",
+    "dev:loopback": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
