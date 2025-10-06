@@ -1,9 +1,13 @@
-import Navbar from "./components/navbar.tsx";
+import NoUserNav from "./components/noUserNav.tsx";
+import {useAuth0} from "@auth0/auth0-react";
+import UserNav from "./components/userNav.tsx";
 
 export default function Home() {
+    const { isAuthenticated } = useAuth0();
+
     return (
         <div className="h-screen flex flex-col">
-            <Navbar/>
+            {isAuthenticated ? <UserNav/> : <NoUserNav/>}
             <div className="flex-1 relative">
                 <video
                     src={"world_map.mp4"}
