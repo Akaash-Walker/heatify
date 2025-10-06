@@ -1,10 +1,16 @@
 import { Router} from "express";
 import * as querystring from "node:querystring";
 import crypto from "node:crypto";
+import dotenv from "dotenv";
+import * as axios from "axios";
+
+dotenv.config();
+
+const client_secret = process.env.CLIENT_SECRET || '';
 
 const router = Router();
 const client_id = "cb8bfc95d6e344a89d9f9033d8e440c0"
-const redirect_uri = "http://127.0.0.1:5173/"
+const redirect_uri = "http://127.0.0.1:5173/api/callback"
 
 // Function to generate a random string for state parameter
 function generateRandomString(length: number) {
@@ -30,6 +36,76 @@ router.get('/login', (_req, res) => {
             state: state
         }));
 })
+
+router.get('/callback', function(req, res) {
+
+    const code = typeof req.query.code === 'string' ? req.query.code : '';
+    const form = {
+        code,
+        redirect_uri,
+        grant_type: 'authorization_code'
+    };
+    const state = req.query.state || null;
+
+    if (state === null) {
+        res.redirect('/#' +
+            querystring.stringify({
+                error: 'state_mismatch'
+            }));
+    } else {
+        const authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: redirect_uri,
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))
+            },
+            json: true
+        };
+
+
+
+        axios.default.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
+            .then(response => {
+                if (response.status === 200) {
+
+                    const access_token = response.data.access_token,
+                        refresh_token = response.data.refresh_token;
+
+                    const options = {
+                        url: 'https://api.spotify.com/v1/me',
+                        headers: { 'Authorization': 'Bearer ' + access_token },
+                        json: true
+                    };
+
+                    // use the access token to access the Spotify Web API
+                    axios.default.get(options.url, {headers: options.headers}).then(response => {
+                        console.log(response.data);
+                    });
+
+                    // we can also pass the token to the browser to make requests from there
+                    res.redirect('http://127.0.0.1:5173/#' +
+                        querystring.stringify({
+                            access_token: access_token,
+                            refresh_token: refresh_token
+                        }));
+                } else {
+                    res.redirect('/#' +
+                        querystring.stringify({
+                            error: 'invalid_token'
+                        }));
+                }
+            })
+            .catch(error => {
+                res.send(error);
+            });
+    }
+});
+
 
 
 export default router;
