@@ -1,2 +1,15 @@
 @import 'tailwindcss';
 @plugin 'daisyui';
+
+@theme {
+    --animate-fade-in: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
