@@ -36,8 +36,7 @@ const sendData = async () =>{
 
 
 const receiveData = async (id: string) => {
-    const userId = id;
-    const json = {userId: userId};
+    const json = {userId: id};
     const body = JSON.stringify(json);
 
     const response = await fetch ("http://localhost:3000/get", {
