@@ -13,7 +13,7 @@ const client_id = "cb8bfc95d6e344a89d9f9033d8e440c0"
 const redirect_uri = "http://127.0.0.1:5173/api/callback"
 
 // Function to generate a random string for state parameter
-function generateRandomString(length: number) {
+const generateRandomString = (length: number)=> {
     const randomBytes = crypto.randomBytes(Math.ceil(length / 2));
     const hexString = randomBytes.toString('hex');
     return hexString.slice(0, length);
