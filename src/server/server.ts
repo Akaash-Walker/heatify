@@ -89,22 +89,41 @@ app.post("/load", async (req, res) =>{
     //Switch to said collection
     collection = client.db("myDatabase").collection(colName);
 
-    //All the documents in that user's data
-    //const docs = await collection.find({}).toArray();
-
     //All the passed in last listened to artists
     const listenedArtists = data[i].recentlyListened;
 
     for (var n = 0; n < listenedArtists.length; n++){
-      const checkArtist = await collection.findOne({name: listenedArtists[i].artistId})
-
+      const checkArtist = await collection.findOne({name: listenedArtists[n].artistId})
+  
       //If the current artist has not been logged in the collection
       if (!checkArtist){
-        await collection.insertOne({name: listenedArtists[i].artistId, country: listenedArtists[i].country});
+        //console.log("Adding artist to database " + listenedArtists[n].artistId)
+        await collection.insertOne({name: listenedArtists[n].artistId, country: listenedArtists[n].country});
+      }
+      else{
+        //console.log("Already exists " + listenedArtists[n].artistId)
       }
     }
 
+    //All the documents in that user's data
+    const docs = await collection.find({}).toArray();
+    console.log("docs in collection", docs);
 
-  }//await collection.insertOne({artist: });
+  }
+  res.json({message: "Done"});
 
+})
+
+app.post("/get", async (req, res) => {
+  //The id of the user corrisponding to the collection its data resides in
+  const userId = req.body.userId;
+  
+  //The collection of artists and countries
+  collection = client.db("myDatabase").collection(userId);
+
+  //Array of documents in colleciton
+  const docs = await collection.find({}).toArray();
+
+  //Send as response
+  res.json(docs);
 })
