@@ -1,16 +1,20 @@
 import { createRoot } from 'react-dom/client'
 import Home from "./home.tsx";
-import {Auth0Provider} from "@auth0/auth0-react";
+import {StrictMode} from "react";
+import {BrowserRouter, Route, Routes} from "react-router";
+
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home />} />
+            </Routes>
+        </BrowserRouter>
+    )
+}
 
 createRoot(document.getElementById('root')!).render(
-    <Auth0Provider
-        // move to env later
-        domain="dev-yhen7sk0jojn6bpe.us.auth0.com"
-        clientId="vKbeUBNPnB2LwlWTksn0npr7chbtqCmA"
-        authorizationParams={{
-            redirect_uri: window.location.origin
-        }}
-    >
-        <Home/>
-    </Auth0Provider>,
+    <StrictMode>
+        <App/>
+    </StrictMode>,
 );
