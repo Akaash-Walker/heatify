@@ -2,7 +2,7 @@ import { Router} from "express";
 import * as querystring from "node:querystring";
 import crypto from "node:crypto";
 import dotenv from "dotenv";
-import * as axios from "axios";
+import axios from "axios";
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ router.get('/', (_req, res) => {
 
 router.get('/login', (_req, res) => {
     const state = generateRandomString(16);
-    const scope = 'user-read-private user-read-email';
+    const scope = 'user-read-private user-read-email user-read-recently-played';
 
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
@@ -69,7 +69,7 @@ router.get('/callback', function(req, res) {
 
 
 
-        axios.default.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
+        axios.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
             .then(response => {
                 if (response.status === 200) {
 
@@ -82,12 +82,12 @@ router.get('/callback', function(req, res) {
                         json: true
                     };
 
-                    // use the access token to access the Spotify Web API
-                    axios.default.get(options.url, {headers: options.headers}).then(response => {
+                    // use access token to access the Spotify Web API
+                    axios.get(options.url, {headers: options.headers}).then(response => {
                         console.log(response.data);
                     });
 
-                    // we can also pass the token to the browser to make requests from there
+                    // pass token to the browser to make requests
                     res.redirect('http://127.0.0.1:5173/#' +
                         querystring.stringify({
                             access_token: access_token,
@@ -104,6 +104,35 @@ router.get('/callback', function(req, res) {
                 res.send(error);
             });
     }
+
+    router.post('/refresh_token', function(req, res) {
+        // requesting access token from refresh token
+        const refresh_token = req.body.refresh_token;
+        const form = {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        };
+
+        const authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            headers: { 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')) },
+            form: form,
+            json: true
+        };
+
+        axios.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
+            .then(response => {
+                if (response.status === 200) {
+                    const access_token = response.data.access_token;
+                    res.send({
+                        'access_token': access_token
+                    });
+                }
+            })
+            .catch(error => {
+                res.send(error);
+            });
+    });
 });
 
 
