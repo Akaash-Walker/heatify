@@ -1,10 +1,12 @@
 import NoUserNav from "./components/noUserNav.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import UserNav from "./components/userNav.tsx";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Home() {
     const { isAuthenticated } = useAuth0();
+    const navigate = useNavigate();
 
     return (
         <div className="h-screen flex flex-col">
@@ -19,6 +21,12 @@ export default function Home() {
                 <div className="absolute inset-0 flex flex-col items-start justify-center w-1/3 ml-12 animate-fade-in">
                     <span className="text-white text-8xl font-bold mb-8">Visualize Your Music</span>
                     <button className="btn btn-primary">Try Now</button>
+                     <button
+                            className="btn btn-secondary"
+                            onClick={() => navigate("/heat")}
+                        >
+                            View Heatmap
+                        </button>
                 </div>
             </div>
         </div>
