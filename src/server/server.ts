@@ -79,7 +79,20 @@ async function run() {
 }
 run().catch(console.dir);
 
-//Called to load everything passed in, into each user's database
+//Called to load everything passed in into each user's database
+/*Format:
+[
+  {
+    userId: "123",               <---- also functions as the collection title (possibly email?)
+    recentlyListened: [ 
+      {artistId: "a1", country: "UK"},
+      {artistId: "a2", country: "US"},
+      etc.
+    ]
+  },
+  {...}
+]
+*/
 app.post("/load", async (req, res) =>{
   const data = req.body.list; 
   
@@ -114,6 +127,17 @@ app.post("/load", async (req, res) =>{
 
 })
 
+//Response is all documents in user's collection
+/*Format (for user req.body.userId):
+[
+  {
+    name: a4, country: US
+  },
+  {
+    name: a5, country: UK 
+  }
+]
+*/
 app.post("/get", async (req, res) => {
   //The id of the user corrisponding to the collection its data resides in
   const userId = req.body.userId;

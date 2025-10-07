@@ -3,14 +3,14 @@ const sendData = async () =>{
         const data = [
             {
                 userId: "123",
-            recentlyListened: [
+                recentlyListened: [
                 {artistId: "a1", country: "UK"},
                 {artistId: "a2", country: "US"},
                 ]
             },
             {
                 userId: "456",
-            recentlyListened: [
+                recentlyListened: [
                 {artistId: "a4", country: "AU"},
                 {artistId: "a5", country: "NZ"},
                 {artistId: "a7", country: "Yugoslavia"}
