@@ -2,6 +2,7 @@ import NoUserNav from "./components/noUserNav.tsx";
 import {useAuth0} from "@auth0/auth0-react";
 import UserNav from "./components/userNav.tsx";
 
+
 export default function Home() {
     const { isAuthenticated } = useAuth0();
 
