@@ -1,5 +1,10 @@
 class LegendItem {
-    constructor(title: any, color: any, isFor: any, textColor: any){
+    public title: string;
+    public color: string;
+    public isFor: (cases: number) => boolean;
+    public textColor: string;
+
+    constructor(title: string, color: string, isFor: (cases: number) => boolean, textColor: string){
         this.title = title
         this.color = color
         this.isFor = isFor

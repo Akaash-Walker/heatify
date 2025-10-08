@@ -41,8 +41,7 @@ const client = new MongoClient(uri, {
 });
 
 // todo: change to mongodb collection type
-let collection: any
-collection = null
+let collection: any = null;
 
 //each document for each user
 // each document has objects of artist and place of origin
@@ -70,7 +69,7 @@ async function run() {
         console.error("Error during operation:", err);
     }
 
-    app.get("/docs", async (req, res) => {
+    app.get("/docs", async (_req, res) => {
 
         if (collection !== null) {
             const docs = await collection.find({}).toArray()
