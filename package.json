@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.5.0",
+    "@google/genai": "^1.23.0",
     "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.12.2",
     "dotenv": "^17.2.3",
@@ -19,6 +20,7 @@
     "leaflet": "^1.9.4",
     "mongodb": "^6.20.0",
     "nodemon": "^3.1.10",
+    "openai": "^6.2.0",
     "papaparse": "^5.5.3",
     "react": "19.0.0-rc.1",
     "react-dom": "19.0.0-rc.1",

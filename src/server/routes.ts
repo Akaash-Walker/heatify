@@ -3,10 +3,15 @@ import * as querystring from "node:querystring";
 import crypto from "node:crypto";
 import dotenv from "dotenv";
 import axios from "axios";
+import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
 
 const client_secret = process.env.CLIENT_SECRET || '';
+
+const ai = new GoogleGenAI({
+    apiKey: process.env.GOOGLE_API_KEY,
+});
 
 const router = Router();
 const client_id = "cb8bfc95d6e344a89d9f9033d8e440c0"
@@ -19,10 +24,7 @@ const generateRandomString = (length: number)=> {
     return hexString.slice(0, length);
 }
 
-router.get('/', (_req, res) => {
-    res.send('Hello from Express!');
-});
-
+// Route to initiate Spotify login
 router.get('/login', (_req, res) => {
     const state = generateRandomString(16);
     const scope = 'user-read-private user-read-email user-read-recently-played';
@@ -37,6 +39,7 @@ router.get('/login', (_req, res) => {
         }));
 })
 
+// Route to handle Spotify callback (return)
 router.get('/callback', function(req, res) {
 
     const code = typeof req.query.code === 'string' ? req.query.code : '';
@@ -104,36 +107,56 @@ router.get('/callback', function(req, res) {
                 res.send(error);
             });
     }
-
-    router.post('/refresh_token', function(req, res) {
-        // requesting access token from refresh token
-        const refresh_token = req.body.refresh_token;
-        const form = {
-            grant_type: 'refresh_token',
-            refresh_token: refresh_token
-        };
-
-        const authOptions = {
-            url: 'https://accounts.spotify.com/api/token',
-            headers: { 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')) },
-            form: form,
-            json: true
-        };
-
-        axios.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
-            .then(response => {
-                if (response.status === 200) {
-                    const access_token = response.data.access_token;
-                    res.send({
-                        'access_token': access_token
-                    });
-                }
-            })
-            .catch(error => {
-                res.send(error);
-            });
-    });
 });
+
+// Route to refresh Spotify access token
+router.post('/refresh_token', function(req, res) {
+    // requesting access token from refresh token
+    const refresh_token = req.body.refresh_token;
+    const form = {
+        grant_type: 'refresh_token',
+        refresh_token: refresh_token
+    };
+
+    const authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: { 'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')) },
+        form: form,
+        json: true
+    };
+
+    axios.post(authOptions.url, querystring.stringify(form), {headers: authOptions.headers})
+        .then(response => {
+            if (response.status === 200) {
+                const access_token = response.data.access_token;
+                res.send({
+                    'access_token': access_token
+                });
+            }
+        })
+        .catch(error => {
+            res.send(error);
+        });
+});
+
+// Route to handle chat requests
+router.post('/chat', async (req, res) => {
+    const prompt = req.body.prompt;
+    console.log("Received prompt: ", prompt);
+    await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+        config: {
+            systemInstruction: "You are a pirate captain. Answer like a pirate.",
+        }
+    }).then(response => {
+        console.log("AI response: ", response.text);
+        res.send(response.text);
+    }).catch(error => {
+        console.error("Error from AI: ", error);
+        res.status(500).json({ error: 'Error generating content' });
+    });
+})
 
 
 

@@ -3,10 +3,11 @@ import {useState} from "react";
 import type Artist from "../../lib/artist.ts";
 import type Item from "../../lib/item.ts";
 
-
 export default function TestPage() {
     const access_token = localStorage.getItem('access_token');
     const [artists, setArtists] = useState<string[]>([]);
+    const [response, setResponse] = useState("");
+    const [prompt, setPrompt] = useState("");
 
     const getRecentlyPlayed = async () => {
         axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
@@ -26,12 +27,25 @@ export default function TestPage() {
         )
     }
 
+    const generateResponse = async () => {
+        axios.post('/api/chat', {
+            prompt: prompt
+        })
+            .then(response => {
+                setResponse(response.data);
+            })
+    }
+
     return (
-        <div>
+        <div className={"flex flex-col gap-4 p-4 w-1/2"}>
+            <label className={"label font-bold"}>Enter a prompt to talk to a pirate.</label>
+            <input className={"input w-full"} onChange={(e) => setPrompt(e.target.value)} />
             <button className={"btn btn-primary"} onClick={getRecentlyPlayed}>Get Recently Played</button>
             {artists.map((artist, index) => (
                 <div key={index}>{`No. ${index + 1}. ${artist}`}</div>
             ))}
+            <button className={"btn btn-secondary"} onClick={() => generateResponse()}>Generate</button>
+            <div>{response}</div>
         </div>
     )
 }
