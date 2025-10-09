@@ -4,16 +4,16 @@ const sendData = async () =>{
             {
                 userId: "123",
                 recentlyListened: [
-                {artistId: "a1", country: "UK"},
-                {artistId: "a2", country: "US"},
+                {name: "a1", country: "UK"},
+                {name: "a2", country: "US"},
                 ]
             },
             {
                 userId: "456",
                 recentlyListened: [
-                {artistId: "a4", country: "AU"},
-                {artistId: "a5", country: "NZ"},
-                {artistId: "a7", country: "Yugoslavia"}
+                {name: "a4", country: "AU"},
+                {name: "a5", country: "NZ"},
+                {name: "a7", country: "Yugoslavia"}
                 ]
             }
         ]
