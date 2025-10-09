@@ -31,7 +31,7 @@ export default function TestPage() {
                 const userEmail = res1.data.email;
 
                 // 2. Get user's recently played tracks
-                const res2 = await axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=2', {
+                const res2 = await axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
                         'Authorization': 'Bearer ' + access_token
