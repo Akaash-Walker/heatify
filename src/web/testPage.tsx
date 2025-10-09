@@ -30,10 +30,17 @@ export default function TestPage() {
     const generateResponse = async () => {
         axios.post('/api/chat', {
             prompt: prompt
-        })
-            .then(response => {
+        }).then(response => {
                 setResponse(response.data);
             })
+    }
+
+    const getUserData = async () => {
+        axios.post('/api/get', {
+            userId: "456"
+        }).then(response => {
+            console.log(response.data);
+        })
     }
 
     return (
@@ -42,6 +49,7 @@ export default function TestPage() {
             <input className={"input w-full"} onChange={(e) => setPrompt(e.target.value)} />
             <button className={"btn btn-primary"} onClick={getRecentlyPlayed}>Get Recently Played</button>
             <button className={"btn btn-secondary"} onClick={() => generateResponse()}>Generate</button>
+            <button className={"btn btn-accent"} onClick={() => getUserData()}>Get User Data</button>
             <div>{response}</div>
             {artists.map((artist, index) => (
                 <div key={index}>{`No. ${index + 1}. ${artist}`}</div>
