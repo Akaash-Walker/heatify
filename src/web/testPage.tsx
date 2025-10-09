@@ -49,7 +49,7 @@ export default function TestPage() {
             <input className={"input w-full"} onChange={(e) => setPrompt(e.target.value)} />
             <button className={"btn btn-primary"} onClick={getRecentlyPlayed}>Get Recently Played</button>
             <button className={"btn btn-secondary"} onClick={() => generateResponse()}>Generate</button>
-            <button className={"btn btn-accent"} onClick={() => getUserData()}>Get User Data</button>
+            <button className={"btn btn-accent"} onClick={() => getUserData()}>Get User 456 Data</button>
             <div>{response}</div>
             {artists.map((artist, index) => (
                 <div key={index}>{`No. ${index + 1}. ${artist}`}</div>
