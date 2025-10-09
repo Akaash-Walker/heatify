@@ -19,37 +19,42 @@ router.get("/docs", async (_req, res) => {
 
 router.post("/load", async (req, res) => {
     const data = req.body.list;
+    const userId = req.body.userId;
+    const response = req.body.response;
 
-    for (let i = 0; i < data.length; i++) {
-        //Find what user we are dealing with
-        const colName = data[i].userId; //Possible placeholder, wait for what constitutes the doc name
-        //Switch to said collection
-        collection = client.db("myDatabase").collection(colName);
+    console.log("User ID: ", userId);
+    console.log("Response: ", response);
 
-        //All the passed in last listened to artists
-        const listenedArtists = data[i].recentlyListened;
-
-        for (let n = 0; n < listenedArtists.length; n++) {
-            const checkArtist = await collection.findOne({name: listenedArtists[n].artistId})
-
-            //If the current artist has not been logged in the collection
-            if (!checkArtist) {
-                //console.log("Adding artist to database " + listenedArtists[n].artistId)
-                await collection.insertOne({
-                    name: listenedArtists[n].artistId,
-                    country: listenedArtists[n].country
-                });
-            } else {
-                //console.log("Already exists " + listenedArtists[n].artistId)
-            }
-        }
-
-        //All the documents in that user's data
-        const docs = await collection.find({}).toArray();
-        console.log("docs in collection", docs);
-
-    }
-    res.json({message: "Done"});
+    // for (let i = 0; i < data.length; i++) {
+    //     //Find what user we are dealing with
+    //     const colName = data[i].userId; //Possible placeholder, wait for what constitutes the doc name
+    //     //Switch to said collection
+    //     collection = client.db("myDatabase").collection(colName);
+    //
+    //     //All the passed in last listened to artists
+    //     const listenedArtists = data[i].recentlyListened;
+    //
+    //     for (let n = 0; n < listenedArtists.length; n++) {
+    //         const checkArtist = await collection.findOne({name: listenedArtists[n].artistId})
+    //
+    //         //If the current artist has not been logged in the collection
+    //         if (!checkArtist) {
+    //             //console.log("Adding artist to database " + listenedArtists[n].artistId)
+    //             await collection.insertOne({
+    //                 name: listenedArtists[n].artistId,
+    //                 country: listenedArtists[n].country
+    //             });
+    //         } else {
+    //             //console.log("Already exists " + listenedArtists[n].artistId)
+    //         }
+    //     }
+    //
+    //     //All the documents in that user's data
+    //     const docs = await collection.find({}).toArray();
+    //     console.log("docs in collection", docs);
+    //
+    // }
+    // res.json({message: "Done"});
 
 })
 
