@@ -1,5 +1,4 @@
 import NoUserNav from "./components/noUserNav.tsx";
-import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function Home() {
@@ -7,17 +6,6 @@ export default function Home() {
     const navigateToLogin = () => {
         window.location.href = "/api/login";
     }
-
-    useEffect(() => {
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-        const accessToken = params.get('access_token');
-        if (accessToken) {
-            localStorage.setItem('access_token', accessToken);
-            // Optionally, remove the token from the URL
-            window.location.hash = '';
-        }
-    }, []);
     return (
         <div className="h-screen flex flex-col">
             <NoUserNav/>

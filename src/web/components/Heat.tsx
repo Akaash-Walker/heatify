@@ -17,6 +17,17 @@ const Heat = () => {
 
     useEffect(load, []);
 
+    useEffect(() => {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+        if (accessToken) {
+            localStorage.setItem('access_token', accessToken);
+            // Optionally, remove the token from the URL
+            window.location.hash = '';
+        }
+    }, []);
+
     return(
         <div>
             {countries.length === 0 ? <div>No Data</div> : <div>
