@@ -32,7 +32,7 @@ const Heat = () => {
     useEffect(() => {
         storeAccessToken();
         load();
-    }, []);
+    }, [countries]);
 
     return(
         <div>
