@@ -28,7 +28,7 @@ export default function TestPage() {
     }
 
     const generateResponse = async () => {
-        axios.post('/api/chat', {
+        axios.post('/api/gemini', {
             prompt: prompt
         }).then(response => {
                 setResponse(response.data);
@@ -43,6 +43,8 @@ export default function TestPage() {
         })
     }
 
+
+
     return (
         <div className={"flex flex-col gap-4 p-4 w-1/2"}>
             <label className={"label font-bold"}>Enter a prompt to talk to a pirate.</label>
@@ -50,9 +52,9 @@ export default function TestPage() {
             <button className={"btn btn-primary"} onClick={getRecentlyPlayed}>Get Recently Played</button>
             <button className={"btn btn-secondary"} onClick={() => generateResponse()}>Generate</button>
             <button className={"btn btn-accent"} onClick={() => getUserData()}>Get User 456 Data</button>
-            <div>{response}</div>
+            <pre>{JSON.stringify(response, null, 2)}</pre>
             {artists.map((artist, index) => (
-                <div key={index}>{`No. ${index + 1}. ${artist}`}</div>
+                <div key={index}>{`${artist},`}</div>
             ))}
         </div>
     )

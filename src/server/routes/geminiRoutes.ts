@@ -1,5 +1,6 @@
-import {GoogleGenAI} from "@google/genai";
+import {GoogleGenAI, Type} from "@google/genai";
 import {Router} from "express";
+import geminiPrompt from "../../../lib/geminiPrompt.ts";
 
 export const router = Router();
 
@@ -12,14 +13,33 @@ if (!process.env.GOOGLE_API_KEY) {
 }
 
 // Route to handle chat requests
-router.post('/chat', async (req, res) => {
+router.post('/gemini', async (req, res) => {
     const prompt = req.body.prompt;
     console.log("Received prompt: ", prompt);
     await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: prompt,
         config: {
-            systemInstruction: "You are a pirate captain. Answer like a pirate.",
+            systemInstruction: geminiPrompt.systemInstruction,
+            responseMimeType: "application/json",
+            responseSchema: {
+                type: Type.ARRAY,
+                items: {
+                    type: Type.OBJECT,
+                    required: ["name", "country"],
+                    additionalProperties: false,
+                    properties: {
+                        name: { type: Type.STRING },
+                        country: {
+                            type: Type.STRING,
+                            // ISO A3 or NO_COUNTRY
+                            pattern: "^(?:[A-Z]{3}|NO_COUNTRY)$",
+                        },
+                    },
+                },
+            },
+            // Reduce variance
+            temperature: 0,
         }
     }).then(response => {
         console.log("AI response: ", response.text);
