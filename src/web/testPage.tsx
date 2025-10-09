@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import type Artist from "../../lib/artist.ts";
 import type Item from "../../lib/item.ts";
 
@@ -9,8 +9,16 @@ export default function TestPage() {
     const [response, setResponse] = useState("");
     const [prompt, setPrompt] = useState("");
     const [email, setEmail] = useState("");
+    const hasRun = useRef(false);
 
     useEffect(() => {
+        if (hasRun.current) return;
+        hasRun.current = true;
+
+        if (!access_token) {
+            console.error("No access token found");
+            return;
+        }
         const runRequests = async () => {
             try {
                 // 1. Get user's email
@@ -23,7 +31,7 @@ export default function TestPage() {
                 const userEmail = res1.data.email;
 
                 // 2. Get user's recently played tracks
-                const res2 = await axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=50', {
+                const res2 = await axios.get('https://api.spotify.com/v1/me/player/recently-played?limit=2', {
                     headers: {
                         'content-type': 'application/x-www-form-urlencoded',
                         'Authorization': 'Bearer ' + access_token
