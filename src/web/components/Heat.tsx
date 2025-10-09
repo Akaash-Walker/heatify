@@ -15,9 +15,9 @@ const Heat = () => {
         loadCountriesTask.load(setCountries);
     };
 
-    useEffect(load, []);
-
-    useEffect(() => {
+    // grabs access token from URL hash and stores it in localStorage
+    // needed for making authenticated requests to Spotify API
+    const storeAccessToken = () => {
         const hash = window.location.hash.substring(1);
         const params = new URLSearchParams(hash);
         const accessToken = params.get('access_token');
@@ -26,6 +26,12 @@ const Heat = () => {
             // Optionally, remove the token from the URL
             window.location.hash = '';
         }
+    }
+
+    // on component mount, store access token and load country data
+    useEffect(() => {
+        storeAccessToken();
+        load();
     }, []);
 
     return(
