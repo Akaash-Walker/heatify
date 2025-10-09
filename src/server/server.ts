@@ -41,7 +41,7 @@ const client = new MongoClient(uri, {
 });
 
 // todo: change to mongodb collection type
-let collection: any;
+let collection: any = null;
 
 //each document for each user
 // each document has objects of artist and place of origin
