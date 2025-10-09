@@ -17,7 +17,7 @@ const client = new MongoClient(uri, {
 });
 
 
-export default async function Mongo() {
+export default async function MongoConnection() {
     //console.log("Welcome " + process.env.USERNM);
     try {
         // Connect the client to the server	(optional starting in v4.7)

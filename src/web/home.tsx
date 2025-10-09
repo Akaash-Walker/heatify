@@ -1,6 +1,6 @@
 import NoUserNav from "./components/noUserNav.tsx";
 import {useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -31,12 +31,13 @@ export default function Home() {
                 <div className="absolute inset-0 flex flex-col items-start justify-center w-1/3 ml-12 animate-fade-in">
                     <span className="text-white text-8xl font-bold mb-8">Visualize Your Music</span>
                     <button className="btn btn-primary" onClick={navigateToLogin}>Try Now</button>
-                     <button
-                            className="btn btn-secondary"
-                            onClick={() => navigate("/heat")}
-                        >
-                            View Heatmap
-                        </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => navigate("/heat")}
+                    >
+                        View Heatmap
+                    </button>
+                    <button className={"btn btn-accent"} onClick={() => navigate("/test")}>Test Page</button>
                 </div>
             </div>
         </div>

@@ -1,10 +1,10 @@
-import Mongo from "../mongo.ts";
+import MongoConnection from "../mongoConnection.ts";
 import type {Collection} from "mongodb";
 import {Router} from "express";
 
 const router = Router();
 // Connect to MongoDB
-const client = await Mongo();
+const client = await MongoConnection();
 
 
 /* CONNECTION TO MONGODB */
