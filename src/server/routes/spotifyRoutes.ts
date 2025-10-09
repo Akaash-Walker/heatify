@@ -10,7 +10,11 @@ dotenv.config();
 
 const client_id = "cb8bfc95d6e344a89d9f9033d8e440c0"
 const redirect_uri = "http://127.0.0.1:5173/api/callback"
-const client_secret = process.env.CLIENT_SECRET || '';
+const client_secret = process.env.CLIENT_SECRET;
+
+if (!client_secret) {
+    throw new Error("Missing CLIENT_SECRET environment variable");
+}
 
 // Function to generate a random string for state parameter
 const generateRandomString = (length: number) => {

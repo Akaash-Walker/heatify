@@ -7,6 +7,9 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_API_KEY,
 });
 
+if (!process.env.GOOGLE_API_KEY) {
+    throw new Error("Missing GOOGLE_API_KEY environment variable");
+}
 
 // Route to handle chat requests
 router.post('/chat', async (req, res) => {
