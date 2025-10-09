@@ -20,7 +20,7 @@ const Heatmap = ({countries}: {countries: GeoJSONType}) =>  {
     }
 
     return (
-        <MapContainer className="h-[calc(82vvh)]" zoom={2} center={[20, 100]}>
+        <MapContainer className="h-[calc(82vh)]" zoom={2} center={[20, 100]}>
         <GeoJSON style = {mapStyle} data = {countries} onEachFeature={onEachCountry}/>
     </MapContainer>
     )
