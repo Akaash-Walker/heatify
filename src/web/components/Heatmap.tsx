@@ -29,7 +29,7 @@ const Heatmap = ({countries}: { countries: GeoJSONType }) => {
     const mapStyle = {
         fillColor: "#404040ff",
         weight: 1,
-        color: "#e1ddddff",
+        color: "#898989",
         fillOpacity: 1
     };
 
