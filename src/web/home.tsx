@@ -1,17 +1,12 @@
 import {useNavigate} from "react-router-dom";
 import NoUserNav from "./components/noUserNav.tsx";
 import BackgroundVideo from "./components/BackgroundVideo.tsx";
-import {useEffect} from "react";
 
 export default function Home() {
     const navigate = useNavigate();
     const navigateToLogin = () => {
         window.location.href = "/api/login";
     }
-
-    useEffect(() => {
-        import("./components/Heat.tsx")
-    }, []);
 
     return (
         <div className="h-screen flex flex-col">
