@@ -14,7 +14,7 @@ async function getUserEmail(accessToken: string | null): Promise<string> {
             }
         });
         return res.data.email;
-    } catch (error: any) {
+    } catch (error: Error) {
         console.error("Failed to fetch Spotify user info:", error.response?.data || error.message);
         throw error;
     }
@@ -34,8 +34,8 @@ const Heatmap = ({countries}: { countries: GeoJSONType }) => {
     };
 
 
-    const onEachCountry = (country: { properties: { color: any; ADMIN: any; ISO_A3: any; }; }, layer: {
-        options: { fillColor: any; };
+    const onEachCountry = (country: { properties: { color: string; ADMIN: string; ISO_A3: string; }; }, layer: {
+        options: { fillColor: never; };
         bindPopup: (arg0: string) => void;
     }) => {
         layer.options.fillColor = country.properties.color;

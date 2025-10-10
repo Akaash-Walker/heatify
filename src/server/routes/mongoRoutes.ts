@@ -13,7 +13,7 @@ const router = Router();
 const client = await MongoConnection();
 
 /* CONNECTION TO MONGODB */
-let collection: Collection<Document>;
+let collection: Collection;
 
 router.get("/docs", async (_req, res) => {
     if (collection !== undefined) {
@@ -38,9 +38,10 @@ router.post("/load", async (req, res) => {
       const checkArtist = await collection.findOne({name: response[i].name})
     
       //If the current artist has not been logged in the collection
+
       if (!checkArtist) {
         await collection.insertOne({
-          // @ts-ignore
+
           name: (response[i].name).trim(),
           country: (response[i].country).trim()
         });
