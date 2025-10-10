@@ -28,10 +28,12 @@ class LoadCountriesTask{
     .then(response => {
         const countryCount: Record<string, number> = {}
         for (const data of response.data){
+            if(data.country != "NO_COUNTRY"){
             if (!countryCount[data.country])
                 countryCount[data.country] = 1
             else
                 countryCount[data.country]++
+        }
         }
         for (let i = 0; i < this.features.length; i++)
             this.#setCountryColor(this.features[i], 0) 
