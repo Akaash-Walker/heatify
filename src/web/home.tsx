@@ -1,12 +1,11 @@
-import {useNavigate} from "react-router-dom";
 import NoUserNav from "./components/noUserNav.tsx";
 import BackgroundVideo from "./components/BackgroundVideo.tsx";
 
 export default function Home() {
-    const navigate = useNavigate();
     const navigateToLogin = () => {
         window.location.href = "/api/login";
     }
+
     return (
         <div className="h-screen flex flex-col">
             <NoUserNav/>
@@ -16,13 +15,6 @@ export default function Home() {
                     <span className="text-white text-8xl font-bold mb-8">Visualize Your Music</span>
                     <div className={"flex flex-row gap-4"}>
                         <button className="btn btn-primary" onClick={navigateToLogin}>Try Now</button>
-                        <button
-                            className="btn btn-secondary"
-                            onClick={() => navigate("/heat")}
-                        >
-                            View Heatmap
-                        </button>
-                        <button className={"btn btn-accent"} onClick={() => navigate("/test")}>Test Page</button>
                     </div>
                 </div>
             </div>

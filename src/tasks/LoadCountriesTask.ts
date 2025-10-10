@@ -10,9 +10,10 @@ class LoadCountriesTask{
     features = countries.features as any[];
 
 
-    load = (setState)=>{
+    load = (setState): boolean=>{
         this.setState = setState;
         this.#processData();
+        return false;
     }
 
     #processData = () => {
@@ -20,7 +21,7 @@ class LoadCountriesTask{
         const access_token = localStorage.getItem('access_token');
         getUserEmail(access_token).then(username => {
 
-        
+
 
        axios.post('/api/get', { userId: username })
     .then(response => {
@@ -84,8 +85,8 @@ async function getUserEmail(accessToken: string | null): Promise<string> {
       }
     });
 
-    const userEmail = res.data.email;
-    return userEmail;
+    return res.data.email;
+
   } catch (error: any) {
     console.error("Failed to fetch Spotify user info:", error.response?.data || error.message);
     throw error;
