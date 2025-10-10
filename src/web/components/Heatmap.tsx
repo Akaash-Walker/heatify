@@ -9,9 +9,9 @@ import LoadCountriesTask from "../../tasks/LoadCountriesTask";
 const Heatmap = ({countries}: {countries: GeoJSONType}) =>  {
 
     const mapStyle = {
-        fillColor: "white",
+        fillColor: "#404040ff",
         weight:1,
-        color:"black",
+        color:"#e1ddddff",
         fillOpacity:1
     };
 
@@ -21,7 +21,8 @@ const Heatmap = ({countries}: {countries: GeoJSONType}) =>  {
         const name = country.properties.ADMIN;
         const loadCountriesTask = new LoadCountriesTask();
         loadCountriesTask.getArtists(country.properties.ISO_A3).then(artists => {
-        layer.bindPopup(`${name}<br>${artists}`);
+        const artistList = artists.join("<br>");
+        layer.bindPopup(`<b>${name}</b><br>${artistList}`);   
     });
     }
 

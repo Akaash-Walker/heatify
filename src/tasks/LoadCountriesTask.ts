@@ -24,7 +24,7 @@ class LoadCountriesTask{
     }
 
     #processData = () => {
-       axios.post('/api/get', { userId: "456" })
+       axios.post('/api/get', { userId: "davydillon1@gmail.com" })
     .then(response => {
         const countryCount: Record<string, number> = {}
         for (const data of response.data){
@@ -73,7 +73,7 @@ class LoadCountriesTask{
  };
 
 getArtists(ISO_A3): Promise<string[]> {
-    return axios.post('/api/get', { userId: "456" })
+    return axios.post('/api/get', { userId: "davydillon1@gmail.com" })
       .then(response => {
         const artists: string[] = [];
         for (const data of response.data) {

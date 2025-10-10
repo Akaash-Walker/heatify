@@ -3,39 +3,39 @@ import LegendItem from "./LegendItem"
 const legendItems = [
     new LegendItem(
         "21+",
-        "#741f1f",
+        "#032a11ff",
         (cases) => cases >= 21,
         "white"
     ),
     new LegendItem(
         "16 - 20",
-        "#9c2929",
+        "#0a672aff",
         (cases) => cases >= 16 && cases < 21,
         "white"
     ),
     new LegendItem(
         "11 - 15",
-        "#c57f7f",
+        "#1DB954",
         (cases) => cases >= 11 && cases < 16,
-        "black"
+        "white"
     ),
      new LegendItem(
         "6 - 10",
-        "#d8aaaa",
+        "#4de382ff",
         (cases) => cases >= 6 && cases < 11,
-        "black"
+        "white"
     ),
      new LegendItem(
         "1 - 5",
-        "#ebd4d4",
+        "#97e9b4ff",
         (cases) => cases > 0 && cases < 6,
-        "black"
+        "white"
     ),
     new LegendItem(
         "0",
-        "#ffffff",
+        "#404040ff",
         () => true,
-        "black"
+        "white"
     ),
     
 ];
