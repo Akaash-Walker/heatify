@@ -24,7 +24,8 @@ router.get("/docs", async (_req, res) => {
 
 router.post("/load", async (req, res) => {
     //const data = req.body.list;
-    const userId = req.body.userId;
+    const tempUser = req.body.userId;
+    const userId = tempUser.replace(/[@,.]/g, "");
     const response = req.body.response;
 
     console.log("User ID: ", userId);
@@ -41,8 +42,8 @@ router.post("/load", async (req, res) => {
       if (!checkArtist) {
         await collection.insertOne({
           // @ts-ignore
-          name: response[i].name,
-          country: response[i].country
+          name: (response[i].name).trim(),
+          country: (response[i].country).trim()
         });
       }
         
