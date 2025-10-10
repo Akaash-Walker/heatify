@@ -1,14 +1,14 @@
 import {useState, useEffect, Suspense, lazy} from 'react'
-import Legend from "./Legend"
-import LoadCountriesTask from '../../tasks/LoadCountriesTask'
-import legendItems from '../../tasks/LegendItems';
-import NoUserNav from "./noUserNav.tsx";
-import Loading from "../loading.tsx";
+import Legend from "./components/Legend.tsx"
+import LoadCountriesTask from '../tasks/LoadCountriesTask.ts'
+import legendItems from '../tasks/LegendItems.ts';
+import NoUserNav from "./components/noUserNav.tsx";
+import Loading from "./loading.tsx";
 import axios from "axios";
-import type Item from "../../../lib/item.ts";
-import type Artist from "../../../lib/artist.ts";
+import type Item from "../../lib/item.ts";
+import type Artist from "../../lib/artist.ts";
 
-const Heatmap = lazy(() => import('./Heatmap'));
+const Heatmap = lazy(() => import('./components/Heatmap.tsx'));
 
 const hasRun = { current: false };
 

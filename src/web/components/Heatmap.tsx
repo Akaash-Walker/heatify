@@ -35,7 +35,7 @@ const Heatmap = ({countries}: { countries: GeoJSONType }) => {
 
 
     const onEachCountry = (country: { properties: { color: string; ADMIN: string; ISO_A3: string; }; }, layer: {
-        options: { fillColor: never; };
+        options: { fillColor: string; };
         bindPopup: (arg0: string) => void;
     }) => {
         layer.options.fillColor = country.properties.color;
