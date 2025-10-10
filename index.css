@@ -1,5 +1,7 @@
 @import 'tailwindcss';
-@plugin 'daisyui';
+@plugin 'daisyui' {
+    themes: forest --default;
+}
 
 @theme {
     --animate-fade-in: fadeIn 2s ease-in-out;
@@ -12,4 +14,8 @@
     to {
         opacity: 1;
     }
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
 }

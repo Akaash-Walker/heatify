@@ -4,16 +4,16 @@ import {StrictMode} from "react";
 import {BrowserRouter, Route, Routes} from "react-router";
 import TestPage from "./testPage.tsx";
 import Heat from "./components/Heat.tsx"
-import NoUserNav from "./components/noUserNav.tsx";
+import Loading from "./loading.tsx";
 
 export default function App() {
     return (
         <BrowserRouter>
-            <NoUserNav/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/heat" element={<Heat/>}/>
                 <Route path={"/test"} element={<TestPage/>}/>
+                <Route path={"/loading"} element={<Loading/>}/>
             </Routes>
         </BrowserRouter>
     )
