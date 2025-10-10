@@ -4,6 +4,8 @@
 ### Brief Description
 Heatify is a project where you can view where Spotify artists are from. Connect your Spotify account, and explore the world. Tell how many artists are from the country based off of its color. Click on countries and see which artists are from there.
 
+Video Demo found [here](https://www.youtube.com/watch?v=a6IjSg5uVKY) on YouTube
+
 
 All the artist data is gotten from your Spotify account. Unfortunately, Spotify does not store where artists are from. To circumvent this, a query is sent to Google Gemini that will inform the program where all the artist are from. This is then stored in a MongoDB database. After storage, all the data, including artists and number of artists per country, is shown in a world map developed by [Leaflet](https://leafletjs.com/).
 
