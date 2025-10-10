@@ -1,5 +1,4 @@
 const Legend = ({legendItems}) => {
-    console.log(legendItems)
     return (
     <div 
     style = {{

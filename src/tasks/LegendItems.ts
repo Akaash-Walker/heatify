@@ -2,37 +2,37 @@ import LegendItem from "./LegendItem"
 
 const legendItems = [
     new LegendItem(
-        "1,000,000 +",
+        "21+",
         "#741f1f",
-        (cases) => cases >= 1_000_000,
+        (cases) => cases >= 21,
         "white"
     ),
     new LegendItem(
-        "500,000 - 999,999",
+        "16 - 20",
         "#9c2929",
-        (cases) => cases >= 500_000 && cases < 1_000_000,
+        (cases) => cases >= 16 && cases < 21,
         "white"
     ),
     new LegendItem(
-        "200,000 - 499,999",
+        "11 - 15",
         "#c57f7f",
-        (cases) => cases >= 200_000 && cases < 500_000,
+        (cases) => cases >= 11 && cases < 16,
         "black"
     ),
      new LegendItem(
-        "50,000 - 199,999",
+        "6 - 10",
         "#d8aaaa",
-        (cases) => cases >= 50_000 && cases < 200_000,
+        (cases) => cases >= 6 && cases < 11,
         "black"
     ),
      new LegendItem(
-        "0 - 49,999",
+        "1 - 5",
         "#ebd4d4",
-        (cases) => cases >= 0 && cases < 50_000,
+        (cases) => cases > 0 && cases < 6,
         "black"
     ),
     new LegendItem(
-        "No Data",
+        "0",
         "#ffffff",
         () => true,
         "black"
