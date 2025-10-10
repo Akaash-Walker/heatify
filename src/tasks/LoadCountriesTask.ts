@@ -1,8 +1,6 @@
 import countries  from "../const/countries.json"
-import papa from "papaparse"
 import legendItems from "./LegendItems";
 import axios from "axios";
-import { data } from "react-router";
 
 class LoadCountriesTask{
 
@@ -24,7 +22,7 @@ class LoadCountriesTask{
     }
 
     #processData = () => {
-       axios.post('/api/get', { userId: "456" })
+       axios.post('/api/get', { userId: "awalker7179gmailcom" })
     .then(response => {
         const countryCount: Record<string, number> = {}
         for (const data of response.data){
@@ -73,7 +71,7 @@ class LoadCountriesTask{
  };
 
 getArtists(ISO_A3): Promise<string[]> {
-    return axios.post('/api/get', { userId: "456" })
+    return axios.post('/api/get', { userId: "awalker7179gmailcom" })
       .then(response => {
         const artists: string[] = [];
         for (const data of response.data) {
