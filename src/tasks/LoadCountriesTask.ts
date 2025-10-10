@@ -10,7 +10,7 @@ class LoadCountriesTask{
     features = countries.features as any[];
 
 
-    load = (setState)=>{
+    load = (setState): boolean=>{
         this.setState = setState;
         /*
         papa.parse(this.dataurl, {
@@ -19,6 +19,7 @@ class LoadCountriesTask{
             complete: (result)=>  this.#processData(result.data)
         })  */
         this.#processData();
+        return false;
     }
 
     #processData = () => {
