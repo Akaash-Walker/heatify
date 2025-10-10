@@ -4,6 +4,7 @@
 ### Brief Description
 Heatify is a project where you can view where Spotify artists are from. Connect your Spotify account, and explore the world. Tell how many artists are from the country based off of its color. Click on countries and see which artists are from there.
 
+Render deployed [here](https://heatifyapp.onrender.com/)
 Video Demo found [here](https://www.youtube.com/watch?v=a6IjSg5uVKY) on YouTube
 
 
