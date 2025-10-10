@@ -2,10 +2,15 @@ import MongoConnection from "../mongoConnection.ts";
 import type {Collection} from "mongodb";
 import {Router} from "express";
 
+/**
+ * @typedef {Object} _id
+ * @property {string} name
+ * @property {string} country
+ */
+
 const router = Router();
 // Connect to MongoDB
 const client = await MongoConnection();
-
 
 /* CONNECTION TO MONGODB */
 let collection: Collection<Document>;
@@ -35,6 +40,7 @@ router.post("/load", async (req, res) => {
       //If the current artist has not been logged in the collection
       if (!checkArtist) {
         await collection.insertOne({
+          // @ts-ignore
           name: response[i].name,
           country: response[i].country
         });
@@ -42,7 +48,6 @@ router.post("/load", async (req, res) => {
         
       if (response[i].name === "AJR"){
         console.log("What the heck")
-        res.json({message: "HE LISTENS TO AJR"});
       }
     }
     res.json({message: "Done"});
