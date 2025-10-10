@@ -1,8 +1,6 @@
 import countries  from "../const/countries.json"
-import papa from "papaparse"
 import legendItems from "./LegendItems";
 import axios from "axios";
-import { data } from "react-router";
 
 class LoadCountriesTask{
 
@@ -14,17 +12,17 @@ class LoadCountriesTask{
 
     load = (setState)=>{
         this.setState = setState;
-        /*
-        papa.parse(this.dataurl, {
-            download:true,
-            header:true,
-            complete: (result)=>  this.#processData(result.data)
-        })  */
         this.#processData();
     }
 
     #processData = () => {
-       axios.post('/api/get', { userId: "davydillon1@gmail.com" })
+
+        const access_token = localStorage.getItem('access_token');
+        getUserEmail(access_token).then(username => {
+
+        
+
+       axios.post('/api/get', { userId: username })
     .then(response => {
         const countryCount: Record<string, number> = {}
         for (const data of response.data){
@@ -46,21 +44,9 @@ class LoadCountriesTask{
     })
         .catch(error => console.error(error));
 }
+        )}
 
-            /*
-            const dataCountry = countries.find((dataCountry)=> dataCountry.ISO3 === country.properties.ISO_A3)
-
-            country.properties.confirmed = 0;
-            country.properties.confirmedText = "0";
-
-            if (dataCountry != null) {
-                const confirmed = Number(dataCountry.Confirmed)
-                country.properties.confirmed = confirmed
-                country.properties.confirmedText = this.formatNumberWithCommas(confirmed)
-            } 
-            */
-
-    #setCountryColor = (country, count) =>{
+    #setCountryColor = (country: { properties: { color: string; }; }, count: number) =>{
         const legendItem = legendItems.find((item)=> item.isFor(count))
 
         if(legendItem != null) {
@@ -72,8 +58,9 @@ class LoadCountriesTask{
    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
  };
 
-getArtists(ISO_A3): Promise<string[]> {
-    return axios.post('/api/get', { userId: "davydillon1@gmail.com" })
+
+getArtists(ISO_A3: any, username: string): Promise<string[]> {
+    return axios.post('/api/get', { userId: username })
       .then(response => {
         const artists: string[] = [];
         for (const data of response.data) {
@@ -84,6 +71,26 @@ getArtists(ISO_A3): Promise<string[]> {
         return artists; // return inside the promise
       });
 }
+
 }
+
+
+async function getUserEmail(accessToken: string | null): Promise<string> {
+  try {
+    const res = await axios.get('https://api.spotify.com/v1/me', {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+
+    const userEmail = res.data.email;
+    return userEmail;
+  } catch (error: any) {
+    console.error("Failed to fetch Spotify user info:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
 
 export default LoadCountriesTask;
