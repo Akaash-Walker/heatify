@@ -1,48 +1,42 @@
 import axios from "axios";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 export default function WelcomeMessage(){
     const access_token = localStorage.getItem('access_token');
     const [username, setUsername] = useState("");
-    
-    const getUsername = async function(){
-        if (!access_token) {
-            console.error("No access token found");
-            return;
-        }
 
-        try{
-            const res1 = await axios.get('https://api.spotify.com/v1/me', {
+    useEffect(() => {
+        let mounted = true;
+        if (!access_token) return;
+
+        const getUsername = async () => {
+            try {
+                const res = await axios.get("https://api.spotify.com/v1/me", {
                     headers: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + access_token
+                        "content-type": "application/x-www-form-urlencoded",
+                        Authorization: "Bearer " + access_token,
                     },
-                })
-            const userName = res1.data.display_name;
-            setUsername(userName);
-        } catch (error) {
-            console.error("Error fetching username: ", error);
-        }
-    }
-    
-    getUsername();
+                });
+                if (mounted) setUsername(res.data?.display_name ?? "");
+            } catch (error) {
+                if (mounted) console.error("Error fetching username:", error);
+            }
+        };
+
+        getUsername();
+        return () => {
+            mounted = false;
+        };
+    }, [access_token]);
 
     if (username){
         return(
-            <b style={{
-                    position: "absolute", 
-                    top: "20px",          
-                    right: "70px",        
-            }}> Welcome, {username} </b>
+            <p className={"font-bold"}> Welcome, {username}!</p>
         )
     }
     else{
         return(
-            <b style={{
-                    position: "absolute", 
-                    top: "20px",          
-                    right: "70px",        
-            }}> Login to Get Started!</b>
+            <p className={"font-bold"}> Log in to get started!</p>
         )
     }
 }
