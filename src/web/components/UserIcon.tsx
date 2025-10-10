@@ -27,13 +27,15 @@ export default function UserIcon(){
     
     getIcon();
 
-    return(
-        <img src= {icon} className= "w-32 h-32 rounded-full object-cover" style={{
-                position: "absolute", 
-                top: "10px",          
-                right: "10px",  
-                width: 50, height: 50,      
-        }}/>
-    )
+    if (icon){
+        return(
+            <img src= {icon} className= "w-32 h-32 rounded-full object-cover" style={{
+                    position: "absolute", 
+                    top: "10px",          
+                    right: "10px",  
+                    width: 50, height: 50,      
+            }}/>
+        )
+    }
 
 }

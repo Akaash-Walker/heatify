@@ -27,11 +27,22 @@ export default function WelcomeMessage(){
     
     getUsername();
 
-    return(
-        <b style={{
-                position: "absolute", 
-                top: "20px",          
-                right: "70px",        
-        }}> Welcome, {username} </b>
-    )
+    if (username){
+        return(
+            <b style={{
+                    position: "absolute", 
+                    top: "20px",          
+                    right: "70px",        
+            }}> Welcome, {username} </b>
+        )
+    }
+    else{
+        return(
+            <b style={{
+                    position: "absolute", 
+                    top: "20px",          
+                    right: "70px",        
+            }}> Login to Get Started!</b>
+        )
+    }
 }
