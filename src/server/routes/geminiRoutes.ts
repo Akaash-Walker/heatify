@@ -15,7 +15,6 @@ if (!process.env.GOOGLE_API_KEY) {
 // Route to handle chat requests
 router.post('/gemini', async (req, res) => {
     const prompt = req.body.prompt;
-    console.log("Received prompt: ", prompt);
     await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: prompt,
@@ -42,7 +41,6 @@ router.post('/gemini', async (req, res) => {
             temperature: 0,
         }
     }).then(response => {
-        console.log("AI response: ", response.text);
         res.send(response.text);
     }).catch(error => {
         console.error("Error from AI: ", error);

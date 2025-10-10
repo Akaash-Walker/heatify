@@ -2,10 +2,15 @@ import MongoConnection from "../mongoConnection.ts";
 import type {Collection} from "mongodb";
 import {Router} from "express";
 
+/**
+ * @typedef {Object} _id
+ * @property {string} name
+ * @property {string} country
+ */
+
 const router = Router();
 // Connect to MongoDB
 const client = await MongoConnection();
-
 
 /* CONNECTION TO MONGODB */
 let collection: Collection<Document>;
@@ -18,39 +23,35 @@ router.get("/docs", async (_req, res) => {
 })
 
 router.post("/load", async (req, res) => {
-    const data = req.body.list;
+    //const data = req.body.list;
+    const tempUser = req.body.userId;
+    const userId = tempUser.replace(/[@,.]/g, "");
+    const response = req.body.response;
 
-    for (let i = 0; i < data.length; i++) {
-        //Find what user we are dealing with
-        const colName = data[i].userId; //Possible placeholder, wait for what constitutes the doc name
-        //Switch to said collection
-        collection = client.db("myDatabase").collection(colName);
+    console.log("User ID: ", userId);
+    console.log("Response: ", response);
 
-        //All the passed in last listened to artists
-        const listenedArtists = data[i].recentlyListened;
-
-        for (let n = 0; n < listenedArtists.length; n++) {
-            const checkArtist = await collection.findOne({name: listenedArtists[n].artistId})
-
-            //If the current artist has not been logged in the collection
-            if (!checkArtist) {
-                //console.log("Adding artist to database " + listenedArtists[n].artistId)
-                await collection.insertOne({
-                    name: listenedArtists[n].artistId,
-                    country: listenedArtists[n].country
-                });
-            } else {
-                //console.log("Already exists " + listenedArtists[n].artistId)
-            }
-        }
-
-        //All the documents in that user's data
-        const docs = await collection.find({}).toArray();
-        console.log("docs in collection", docs);
-
+    for (let i = 0; i < response.length; i++) {
+      //Switch to said userId collection
+      collection = client.db("myDatabase").collection(userId);
+    
+      //All the passed in last listened to artists
+      const checkArtist = await collection.findOne({name: response[i].name})
+    
+      //If the current artist has not been logged in the collection
+      if (!checkArtist) {
+        await collection.insertOne({
+          // @ts-ignore
+          name: (response[i].name).trim(),
+          country: (response[i].country).trim()
+        });
+      }
+        
+      if (response[i].name === "AJR"){
+        console.log("What the heck")
+      }
     }
     res.json({message: "Done"});
-
 })
 
 //Response is all documents in user's collection
