@@ -85,8 +85,8 @@ async function getUserEmail(accessToken: string | null): Promise<string> {
       }
     });
 
-    const userEmail = res.data.email;
-    return userEmail;
+    return res.data.email;
+
   } catch (error: any) {
     console.error("Failed to fetch Spotify user info:", error.response?.data || error.message);
     throw error;
