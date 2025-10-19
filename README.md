@@ -3,7 +3,7 @@
 **Heatify** is a full-stack web app that visualizes where your favorite music comes from.  
 By connecting your Spotify account, Heatify generates a **heatmap of the countries of origin of your recently listened-to artists** — giving you an interactive view of your global listening habits.
 
-![Heatify Preview](https://heatifyapp.onredner.com)
+[Heatify Preview](https://heatifyapp.onrender.com)
 
 ---
 
